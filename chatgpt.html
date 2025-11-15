@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ultimate Dragon Ball Encyclopedia</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* ================= GENERAL ================= */
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: 'Oswald', sans-serif;
+    background: #000;
+    color: #fff;
+    overflow-x: hidden;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* ================= HOMEPAGE ================= */
+#homepage {
+    height: 100vh;
+    width: 100%;
+    background: url("https://static.wikia.nocookie.net/dragonball/images/8/8f/Universe_Survival_Saga.png") center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+#logo {
+    font-size: 72px;
+    font-family: 'Orbitron', sans-serif;
+    color: #ffb300;
+    text-shadow: 0 0 20px #ff6a00, 0 0 40px #ff6a00;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 20px #ff6a00; }
+    to { text-shadow: 0 0 40px #ff0000; }
+}
+
+#enterBtn {
+    margin-top: 40px;
+    padding: 20px 40px;
+    font-size: 24px;
+    font-weight: bold;
+    background: #ff4500;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+#enterBtn:hover { background: #ff0000; transform: scale(1.1); }
+
+/* ================= NAVBAR ================= */
+#navbar {
+    display: none;
+    background: #111;
+    padding: 10px 20px;
+    display: flex;
+    gap: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    flex-wrap: wrap;
+}
+
+.navBtn {
+    padding: 10px 15px;
+    background: #222;
+    border: 2px solid orange;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+.navBtn:hover { background: orange; color: black; }
+
+/* ================= LIGHT/DARK MODE ================= */
+#modeToggle {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background: black;
+    color: yellow;
+    border: 2px solid yellow;
+    padding: 10px 15px;
+    border-radius: 8px;
+    z-index: 9999;
+    transition: 0.3s;
+}
+body.light #modeToggle { background: white; color: black; border-color: black; }
+
+/* ================= SECTIONS ================= */
+.section { display: none; padding: 30px; }
+.section h1 { color: #ffb300; text-shadow: 0 0 10px orange; margin-bottom: 20px; }
+
+/* ================= CHARACTER CARDS ================= */
+.charContainer { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+.charCard {
+    background: #111;
+    border: 2px solid orange;
+    border-radius: 10px;
+    padding: 15px;
+    width: 220px;
+    transition: 0.3s;
+}
+.charCard:hover { transform: scale(1.05); box-shadow: 0 0 20px orange; }
+.charCard img { width: 100%; border-radius: 8px; }
+.charCard h3 { margin: 10px 0 5px; }
+
+/* ================= SEARCH BAR ================= */
+#searchInput {
+    width: 90%;
+    max-width: 600px;
+    padding: 12px;
+    margin: 20px auto;
+    display: block;
+    font-size: 18px;
+    border-radius: 8px;
+    border: 2px solid orange;
+    background: #222;
+    color: white;
+}
+body.light #searchInput { background: #eee; color: black; border-color: black; }
+
+/* ================= TABS ================= */
+.tabBtn {
+    padding: 8px 16px;
+    background: #222;
+    border: 2px solid orange;
+    margin: 3px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.tabBtn:hover { background: orange; color: black; }
+.tabContent { display: none; margin-top: 15px; }
+
+/* ================= FUSION CALC ================= */
+#fusionCalc { background: #222; padding: 20px; border-radius: 10px; border: 2px solid orange; max-width: 400px; margin: 0 auto 20px; }
+#fusionCalc select, #fusionCalc button { padding: 8px 12px; margin: 5px; border-radius: 6px; border: 1px solid orange; }
+#fusionCalc button { background: orange; color: black; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
+#fusionCalc button:hover { background: #ff6a00; }
+
+/* ================= POWER LEVELS ================= */
+.powerTable { width: 100%; max-width: 800px; margin: 20px auto; border-collapse: collapse; }
+.powerTable th, .powerTable td { border: 2px solid orange; padding: 8px; text-align: center; }
+.powerTable th { background: #333; color: #ffb300; }
+
+/* ================= TIMELINE ================= */
+.timeline { max-width: 1000px; margin: 20px auto; }
+.timelineEvent { background: #222; border-left: 4px solid orange; padding: 10px 15px; margin: 10px 0; border-radius: 5px; transition: 0.3s; }
+.timelineEvent:hover { background: orange; color: black; }
+</style>
+</head>
+
+<body>
+
+<!-- MODE TOGGLE -->
+<button id="modeToggle">Light Mode</button>
+
+<!-- HOMEPAGE -->
+<div id="homepage">
+    <div id="logo">DRAGON BALL UNIVERSE</div>
+    <button id="enterBtn">ENTER</button>
+</div>
+
+<!-- NAVBAR -->
+<div id="navbar" class="hidden">
+    <button class="navBtn" onclick="showSection('homeSection')">Home</button>
+    <button class="navBtn" onclick="showSection('charactersSection')">Characters</button>
+    <button class="navBtn" onclick="showSection('fusionSection')">Fusions</button>
+    <button class="navBtn" onclick="showSection('powerSection')">Power Levels</button>
+    <button class="navBtn" onclick="showSection('timelineSection')">Timeline</button>
+</div>
+
+<!-- HOME SECTION -->
+<div id="homeSection" class="section hidden">
+    <h1>Welcome to the Dragon Ball Encyclopedia</h1>
+    <p>The ultimate Dragon Ball site with ALL characters, fusions, power levels, and saga timelines in one place!</p>
+</div>
+
+<!-- CHARACTERS SECTION -->
+<div id="charactersSection" class="section hidden">
+    <h1>Characters</h1>
+    <input type="text" id="searchInput" onkeyup="filterCharacters()" placeholder="Search Characters...">
+    <div class="charContainer" id="charContainer">
+        <div class="charCard">
+            <img src="https://static.wikia.nocookie.net/dragonball/images/0/01/Goku_Dragon_Ball_Super.png" alt="Goku">
+            <h3>Goku</h3>
+            <p>Son of Bardock, Saiyan, protector of Earth, master of Ultra Instinct.</p>
+        </div>
+        <div class="charCard">
+            <img src="https://static.wikia.nocookie.net/dragonball/images/f/f2/Vegeta_Dragon_Ball_Super.png" alt="Vegeta">
+            <h3>Vegeta</h3>
+            <p>Prince of Saiyans, rival of Goku, master of Super Saiyan Blue evolution.</p>
+        </div>
+        <div class="charCard">
+            <img src="https://static.wikia.nocookie.net/dragonball/images/3/37/Frieza_Dragon_Ball_Super.png" alt="Frieza">
+            <h3>Frieza</h3>
+            <p>Emperor of the Universe, ruthless conqueror, later ally in Tournament of Power.</p>
+        </div>
+    </div>
+</div>
+
+<!-- FUSIONS SECTION -->
+<div id="fusionSection" class="section hidden">
+    <h1>Fusions</h1>
+    <div id="fusionCalc">
+        <p>Select two characters to see their fusion result:</p>
+        <select id="fusion1">
+            <option>Goku</option>
+            <option>Vegeta</option>
+            <option>Gohan</option>
+        </select>
+        <select id="fusion2">
+            <option>Vegeta</option>
+            <option>Goku</option>
+            <option>Gohan</option>
+        </select>
+        <button onclick="showFusion()">Fuse!</button>
+        <div id="fusionResult" style="margin-top:10px;"></div>
+    </div>
+</div>
+
+<!-- POWER LEVELS SECTION -->
+<div id="powerSection" class="section hidden">
+    <h1>Power Levels</h1>
+    <table class="powerTable">
+        <tr><th>Character</th><th>Dragon Ball</th><th>DBZ</th><th>DB Super</th><th>GT</th></tr>
+        <tr><td>Goku</td><td>100</td><td>3,000,000</td><td>90,000,000</td><td>50,000,000</td></tr>
+        <tr><td>Vegeta</td><td>90</td><td>2,900,000</td><td>80,000,000</td><td>45,000,000</td></tr>
+        <tr><td>Gohan</td><td>80</td><td>1,200,000</td><td>60,000,000</td><td>25,000,000</td></tr>
+        <tr><td>Frieza</td><td>500</td><td>3,000,000</td><td>120,000,000</td><td>-</td></tr>
+        <tr><td>Piccolo</td><td>50</td><td>500,000</td><td>10,000,000</td><td>-</td></tr>
+    </table>
+</div>
+
+<!-- TIMELINE SECTION -->
+<div id="timelineSection" class="section hidden">
+    <h1>Timeline & Transformations</h1>
+    <div class="timeline">
+        <div class="timelineEvent"><strong>Dragon Ball:</strong> Goku meets Bulma, starts training and fights Emperor Pilaf.</div>
+        <div class="timelineEvent"><strong>Dragon Ball Z:</strong> Saiyan Saga begins, Raditz arrives, Goku dies fighting him.</div>
+        <div class="timelineEvent"><strong>DBZ:</strong> Frieza Saga, Goku becomes Super Saiyan.</div>
+        <div class="timelineEvent"><strong>DB Super:</strong> Battle of Gods, Resurrection F, Universe Survival Saga.</div>
+        <div class="timelineEvent"><strong>DB GT:</strong> Baby Saga, Super 17 Saga, Shadow Dragons.</div>
+    </div>
+</div>
+
+<script>
+// ENTER HOMEPAGE
+document.getElementById('enterBtn').onclick = function() {
+    document.getElementById('homepage').style.display = 'none';
+    document.getElementById('navbar').style.display = 'flex';
+    showSection('homeSection');
+}
+
+// SHOW SECTIONS
+function showSection(id) {
+    const sections = document.getElementsByClassName('section');
+    for(let sec of sections) sec.style.display = 'none';
+    document.getElementById(id).style.display = 'block';
+}
+
+// LIGHT/DARK MODE
+let darkMode = true;
+document.getElementById('modeToggle').onclick = function() {
+    darkMode = !darkMode;
+    if(darkMode) {
+        document.body.classList.remove('light');
+        this.innerText = "Light Mode";
+    } else {
+        document.body.classList.add('light');
+        this.innerText = "Dark Mode";
+    }
+}
+
+// FILTER CHARACTERS
+function filterCharacters() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.getElementsByClassName('charCard');
+    for(let card of cards){
+        const name = card.getElementsByTagName('h3')[0].innerText.toLowerCase();
+        card.style.display = name.includes(input) ? 'inline-block' : 'none';
+    }
+}
+
+// FUSION CALCULATOR
+function showFusion() {
+    const c1 = document.getElementById('fusion1').value;
+    const c2 = document.getElementById('fusion2').value;
+    let fusionName = "";
+    if((c1=="Goku" && c2=="Vegeta")||(c1=="Vegeta" && c2=="Goku")) fusionName="Vegito";
+    else if((c1=="Goku" && c2=="Gohan")||(c1=="Gohan" && c2=="Goku")) fusionName="Gokhan";
+    else if((c1=="Vegeta" && c2=="Gohan")||(c1=="Gohan" && c2=="Vegeta")) fusionName="Veghan";
+    else fusionName=c1 + " + " + c2;
+    document.getElementById('fusionResult').innerHTML = "<h3>Result: "+fusionName+"</h3>";
+}
+</script>
+
+</body>
+</html>
